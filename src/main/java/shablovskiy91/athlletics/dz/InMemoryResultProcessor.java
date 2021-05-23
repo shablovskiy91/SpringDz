@@ -32,8 +32,8 @@ public class InMemoryResultProcessor implements ResultProcessor {
     }
 
     @Override
-    public void printResults (List<Athlet> filteredAthlets) {
-        for (Athlet athlet : filteredAthlets)
+    public void printResults (List<Athlet> NfastestAthlets) {
+        for (Athlet athlet : NfastestAthlets)
         {
             System.out.println(athlet.toString());
         }
