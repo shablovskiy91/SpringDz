@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.util.List;
 
 public class AthleticsMain {
     public static void main(String[] args) throws IOException {
@@ -17,11 +18,11 @@ public class AthleticsMain {
         File inputFile = new File("AthleticsData.csv");
         String string = Files.readString(inputFile.toPath(), Charset.defaultCharset());
 
-        // Выведем результат
-        resultProcessor.printResults(inputFile, converter.convertCsvToAthletes(string));
+        // Get 5 the fastest women on distance 10 km.
+        List<Athlet> fastestWoman = resultProcessor.getNFastests(inputFile, converter.convertCsvToAthletes(string), 5, "Ж", "10 км");
 
-        // Выведем 5 быстрых женщин на дистанции 10 км.
-        resultProcessor.printNFastests(inputFile, converter.convertCsvToAthletes(string), 5, "Ж", "10 км");
+        // Print results
+        resultProcessor.printResults(fastestWoman);
 
     }
 }

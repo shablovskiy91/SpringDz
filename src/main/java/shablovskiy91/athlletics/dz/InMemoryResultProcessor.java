@@ -4,35 +4,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class InMemoryResultProcessor implements ResultProcessor {
+
+    private final Collection<Athlet> results;
 
     // объект интерфейса
     private final Converter converter;
 
     // Конструктор принимает интерфейс
     @Autowired
-    public InMemoryResultProcessor(Converter converter) {
+    public InMemoryResultProcessor(Collection<Athlet> results, Converter converter) {
+        this.results = results;
         this.converter = converter;
     }
 
     @Override
-    public void printResults(File file, HashSet<Athlet> athletes) {
-        for (Athlet athlet : athletes) {
-            System.out.println(athlet.toString());
-        }
-
+    public List<Athlet> getNFastests(File file, TreeSet<Athlet> athletes, int n, String gender, String distance) {
+        // Print only N athletes filtered by distance and sex
+        return athletes.stream()
+                .filter(athlet -> athlet.getGender().equals(gender) && athlet.getDistance().equals(distance))
+                .limit(n)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public void printNFastests(File file, HashSet<Athlet> athletes, int n, String distance, String sex) {
-        //Создаём сет n быстрых легкоатлетов
-        HashSet<Athlet> fastests = new HashSet<Athlet>();
-        
-    }
+    public void printResults (List<Athlet> filteredAthlets) {
+        for (Athlet athlet : filteredAthlets)
+        {
+            System.out.println(athlet.toString());
+        }
+    };
 }

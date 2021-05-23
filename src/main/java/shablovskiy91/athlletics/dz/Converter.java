@@ -5,5 +5,5 @@ import java.util.TreeSet;
 
 public interface Converter {
     Athlet convertLineToAthlet(String line);
-    HashSet<Athlet> convertCsvToAthletes(String inputData);
+    TreeSet<Athlet> convertCsvToAthletes(String inputData);
 }

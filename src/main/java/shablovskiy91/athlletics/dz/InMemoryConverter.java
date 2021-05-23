@@ -2,20 +2,20 @@ package shablovskiy91.athlletics.dz;
 
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.TreeSet;
 
 @Service
 public class InMemoryConverter implements Converter {
-    private final HashSet<Athlet> competitionsData;
+    private final TreeSet<Athlet> competitionsData;
 
-    public InMemoryConverter(HashSet<Athlet> competitionsData) {
+    public InMemoryConverter(TreeSet<Athlet> competitionsData) {
         this.competitionsData = competitionsData;
     }
 
     @Override
-    public HashSet<Athlet> convertCsvToAthletes(String inputData) {
-        HashSet<Athlet> athlets = new HashSet<Athlet>();
+    public TreeSet<Athlet> convertCsvToAthletes(String inputData) {
+        TreeSet<Athlet> athlets = new TreeSet<Athlet>(new AthletTimeComparator());
+
         String [] lines = inputData.split("\r\n");
         for (int i = 1; i < lines.length; i++ ) {
             athlets.add(convertLineToAthlet(lines[i]));
