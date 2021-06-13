@@ -1,11 +1,10 @@
 package shablovskiy91.exam.dz;
 
-import java.io.File;
-import java.util.TreeMap;
+import java.util.Map;
 
 public interface ResultsProcessor {
 
-    int calcExamTotalScore(TreeMap correctAnswersFile, TreeMap pupilAnswersFile) throws Exception;
+    int calcExamTotalScore(Map correctAnswersFile, Map pupilAnswersFile) throws Exception;
 
     void printResults(Pupil pupil);
 }

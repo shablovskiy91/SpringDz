@@ -19,9 +19,15 @@ public class ExamMain {
         File correctExamAnswers = new File("CorrectExamAnswers.csv");
         File pupilExamAnswers = new File("ExamAnswers.csv");
 
-        int pupilTotalScore = resultsProcessor.calcExamTotalScore(
-                converterTwo.convertCsvToTheAnswers(correctExamAnswers),
-                converterTwo.convertCsvToTheAnswers(pupilExamAnswers));
+        int pupilTotalScore = 0;
+
+        try {
+            pupilTotalScore = resultsProcessor.calcExamTotalScore(
+                    converterTwo.convertCsvToTheAnswers(correctExamAnswers),
+                    converterTwo.convertCsvToTheAnswers(pupilExamAnswers));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         Pupil pupil1 = new Pupil("Василий Васильевич Васильев", pupilTotalScore);
 

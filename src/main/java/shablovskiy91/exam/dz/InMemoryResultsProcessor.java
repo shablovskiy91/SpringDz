@@ -3,6 +3,8 @@ package shablovskiy91.exam.dz;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
+import java.util.Map;
 import java.util.TreeMap;
 
 @Service
@@ -18,21 +20,25 @@ public class InMemoryResultsProcessor implements ResultsProcessor {
     }
 
     @Override
-    public int calcExamTotalScore(TreeMap correctAnswers, TreeMap pupilAnswers) throws Exception {
+    public int calcExamTotalScore(Map correctAnswers, Map pupilAnswers) throws Exception {
         int totalScore = 0;
+
         // Check data validity
-        if (correctAnswers.size() != pupilAnswers.size())
+        if (correctAnswers.size() != pupilAnswers.size()) {
             throw new Exception("Exam data not correct! File size is different" + correctAnswers.size() + pupilAnswers.size());
-        for (Object key : correctAnswers.keySet()) {
-            if (!correctAnswers.get(key).equals(pupilAnswers.get(key))) {
-                throw new Exception("Exam data not correct! " + pupilAnswers.get(key));
-            }
         }
 
-        // compare values
-
-
-        System.out.println(correctAnswers);
+        // compare answer values
+        Iterator<Integer> iterator = correctAnswers.keySet().iterator();
+        while(iterator.hasNext()) {
+            int taskNumber = iterator.next();
+            String correctAnswer = (String) correctAnswers.get(taskNumber);
+            String pupilAnswer = (String) pupilAnswers.get(taskNumber);
+            if (pupilAnswer.equals(correctAnswer)) {
+                int taskRate = taskRateResolver.getTaskRate(taskNumber);
+                totalScore = totalScore + taskRate;
+            }
+        }
 
         return totalScore;
     }
